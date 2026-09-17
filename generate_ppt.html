@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Download Panduan PPT</title>
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/libs/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+      background: #06060F;
+      color: white;
+    }
+
+    button {
+      padding: 12px 24px;
+      background: #6366F1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #8B5CF6;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 12px;
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div style="font-size:40px; margin-bottom: 20px;">🎓</div>
+    <h2>Membuat File Presentasi...</h2>
+    <p style="color:#aaa; margin-bottom:20px;">Jika unduhan tidak mulai secara otomatis, silakan klik tombol di bawah
+      ini.</p>
+    <button onclick="generatePPT()">Download PPTX Sekarang</button>
+  </div>
+
+  <script>
+    function generatePPT() {
+      let pptx = new PptxGenJS();
+      pptx.layout = "LAYOUT_16x9";
+
+      // Define master slide for consistency
+      pptx.defineSlideMaster({
+        title: "MASTER_SLIDE",
+        background: { color: "FFFFFF" },
+        objects: [
+          { rect: { x: 0, y: 0, w: "100%", h: 0.8, fill: { color: "0C0C1D" } } },
+          { text: { text: "ITE = ITE • Generator SMANCA", options: { x: 0.3, y: 0.15, w: 4, h: 0.5, color: "FFFFFF", fontSize: 14, bold: true } } }
+        ]
+      });
+
+      // ── Slide 1: Cover ───────────────────────
+      let slide1 = pptx.addSlide();
+      slide1.background = { color: "06060F" };
+      slide1.addText("Panduan Penggunaan Aplikasi", { x: 1, y: 2, w: 8, h: 1, fontSize: 24, color: "94A3B8", align: "center" });
+      slide1.addText("ITE = ITE", { x: 1, y: 2.7, w: 8, h: 1.5, fontSize: 54, bold: true, color: "FFFFFF", align: "center" });
+      slide1.addText("Generator Perangkat Ajar SMANCA", { x: 1, y: 4, w: 8, h: 1, fontSize: 28, bold: true, color: "6366F1", align: "center" });
+      slide1.addText("SMAN 4 Mataram", { x: 1, y: 4.8, w: 8, h: 0.5, fontSize: 16, color: "F1F5F9", align: "center" });
+
+      // ── Slide 2: Apa itu ITE = ITE ───────────
+      let slide2 = pptx.addSlide({ masterName: "MASTER_SLIDE" });
+      slide2.addText("Apa itu ITE = ITE?", { x: 0.5, y: 1.2, w: 9, h: 1, fontSize: 32, bold: true, color: "6366F1" });
+      slide2.addText("Aplikasi berbasis Kecerdasan Buatan (AI) untuk mempermudah guru SMAN 4 Mataram dalam menyusun perangkat ajar Kurikulum Merdeka secara instan.", { x: 0.5, y: 2.2, w: 9, h: 1.2, fontSize: 20, color: "333333" });
+      slide2.addText([
+        { text: "Fitur Utama:\n", options: { bold: true } },
+        { text: "• Pembuatan Modul Ajar, RPP, dan LKPD\n" },
+        { text: "• Generate Soal Asesmen (PG & Essay)\n" },
+        { text: "• Penyusunan Silabus, Analisis CP dan TP\n" },
+        { text: "• Modul Pendekatan DEEP Learning\n" },
+        { text: "• Ekspor langsung ke format Microsoft Word (.docx)" }
+      ], { x: 0.5, y: 3.5, w: 9, h: 3, fontSize: 18, color: "444444", lineSpacing: 28 });
+
+      // ── Slide 3: Login & Pendaftaran ─────────
+      let slide3 = pptx.addSlide({ masterName: "MASTER_SLIDE" });
+      slide3.addText("Langkah 1: Pendaftaran & Login", { x: 0.5, y: 1.2, w: 9, h: 1, fontSize: 32, bold: true, color: "6366F1" });
+      slide3.addText([
+        { text: "1. Buka halaman utama aplikasi di browser Anda.\n" },
+        { text: "2. Klik tab " }, { text: "Daftar", options: { bold: true, color: "6366F1" } }, { text: " jika Anda belum memiliki akun.\n" },
+        { text: "3. Isi kelengkapan data (Nama, Email, Nama Sekolah, dan Password minimal 6 karakter).\n" },
+        { text: "4. Klik tombol " }, { text: "Daftar & Masuk", options: { bold: true, color: "6366F1" } }, { text: ".\n" },
+        { text: "5. Untuk selanjutnya, Anda cukup menggunakan menu " }, { text: "Masuk", options: { bold: true, color: "6366F1" } }, { text: " dengan email Anda.\n" },
+        { text: "\n*Catatan: Semua data dokumen dan riwayat Anda tersinkronisasi aman di cloud." }
+      ], { x: 0.5, y: 2.4, w: 9, h: 4, fontSize: 18, color: "333333", lineSpacing: 24 });
+
+      // ── Slide 4: Konfigurasi AI & Profil ──────
+      let slide4 = pptx.addSlide({ masterName: "MASTER_SLIDE" });
+      slide4.addText("Langkah 2: Pengaturan AI & Profil Guru", { x: 0.5, y: 1.2, w: 9, h: 1, fontSize: 32, bold: true, color: "6366F1" });
+      slide4.addText([
+        { text: "Sebelum dapat meng-generate dokumen, lakukan pengaturan awal:\n\n", options: { bold: true } },
+        { text: "1. Buka menu " }, { text: "Pengaturan", options: { bold: true, color: "6366F1" } }, { text: " di sidebar sebelah kiri.\n" },
+        { text: "2. Pilih " }, { text: "Model AI Aktif", options: { bold: true } }, { text: " (Direkomendasikan: Gemini 2.5 Flash - Gratis).\n" },
+        { text: "3. Masukkan " }, { text: "API Key", options: { bold: true } }, { text: " yang telah Anda dapatkan dari Google AI Studio.\n" },
+        { text: "4. Klik tombol " }, { text: "Simpan", options: { bold: true, color: "6366F1" } }, { text: " pada API Key.\n" },
+        { text: "5. Lengkapi form " }, { text: "Profil Guru", options: { bold: true } }, { text: " (Nama Lengkap, NIP, Mapel) agar otomatis terisi saat membuat dokumen.\n" },
+        { text: "6. Klik " }, { text: "Simpan Profil", options: { bold: true, color: "10B981" } }, { text: "." }
+      ], { x: 0.5, y: 2.2, w: 9, h: 4.5, fontSize: 18, color: "333333", lineSpacing: 24 });
+
+      // ── Slide 5: Pembuatan Dokumen ────────────
+      let slide5 = pptx.addSlide({ masterName: "MASTER_SLIDE" });
+      slide5.addText("Langkah 3: Proses Generate Perangkat Ajar", { x: 0.5, y: 1.2, w: 9, h: 1, fontSize: 32, bold: true, color: "6366F1" });
+      slide5.addText([
+        { text: "1. Buka " }, { text: "Dashboard", options: { bold: true, color: "6366F1" } }, { text: " atau pilih jenis dokumen yang diinginkan pada menu kiri (contoh: " }, { text: "Modul Ajar", options: { bold: true } }, { text: ").\n" },
+        { text: "2. Anda akan melihat form input di sebelah kiri layar.\n" },
+        { text: "3. Beberapa isian akan otomatis terisi dari Profil Anda. Lengkapi bagian yang belum (Kelas, Topik Materi, dsb).\n" },
+        { text: "4. Klik tombol " }, { text: "✨ Generate dengan AI", options: { bold: true, color: "6366F1" } }, { text: ".\n" },
+        { text: "5. Tunggu proses berlangsung (sekitar 10 - 30 detik)." }
+      ], { x: 0.5, y: 2.4, w: 9, h: 4, fontSize: 18, color: "333333", lineSpacing: 24 });
+
+      // ── Slide 6: Ekspor ke Word ───────────────
+      let slide6 = pptx.addSlide({ masterName: "MASTER_SLIDE" });
+      slide6.addText("Langkah 4: Hasil & Ekspor (Download)", { x: 0.5, y: 1.2, w: 9, h: 1, fontSize: 32, bold: true, color: "6366F1" });
+      slide6.addText([
+        { text: "1. Setelah proses selesai, hasil dokumen akan tampil di panel kanan.\n" },
+        { text: "2. Anda dapat membaca dan mereview hasilnya langsung di layar.\n" },
+        { text: "3. Untuk menyimpan dokumen, klik tombol " }, { text: "Download Word", options: { bold: true, color: "10B981" } }, { text: " yang ada di pojok kanan atas hasil dokumen.\n" },
+        { text: "4. File akan otomatis tersimpan dalam format " }, { text: ".docx", options: { bold: true } }, { text: " dengan format tabel, penomoran, dan heading yang rapi.\n" },
+        { text: "5. Anda juga bisa menggunakan tombol " }, { text: "Salin", options: { bold: true } }, { text: " untuk meng-copy teks ke aplikasi lain." }
+      ], { x: 0.5, y: 2.4, w: 9, h: 4, fontSize: 18, color: "333333", lineSpacing: 24 });
+
+      // ── Slide 7: Riwayat Dokumen ──────────────
+      let slide7 = pptx.addSlide({ masterName: "MASTER_SLIDE" });
+      slide7.addText("Langkah 5: Mengelola Riwayat", { x: 0.5, y: 1.2, w: 9, h: 1, fontSize: 32, bold: true, color: "6366F1" });
+      slide7.addText([
+        { text: "Setiap dokumen yang berhasil Anda generate akan otomatis tersimpan ke dalam database cloud Anda.\n\n", options: { bold: true } },
+        { text: "• Buka menu " }, { text: "Riwayat", options: { bold: true, color: "6366F1" } }, { text: " pada sidebar.\n" },
+        { text: "• Anda akan melihat daftar semua dokumen yang pernah dibuat beserta waktu pembuatannya.\n" },
+        { text: "• Klik ikon " }, { text: "Mata", options: { bold: true } }, { text: " untuk melihat kembali dokumen tersebut.\n" },
+        { text: "• Klik ikon " }, { text: "Download", options: { bold: true } }, { text: " untuk mengunduhnya kembali menjadi file Word.\n" },
+        { text: "• Klik ikon " }, { text: "Tempat Sampah", options: { bold: true, color: "EF4444" } }, { text: " untuk menghapus dokumen permanen dari database." }
+      ], { x: 0.5, y: 2.4, w: 9, h: 4.5, fontSize: 18, color: "333333", lineSpacing: 24 });
+
+      // ── Slide 8: Penutup ──────────────────────
+      let slide8 = pptx.addSlide();
+      slide8.background = { color: "06060F" };
+      slide8.addText("Terima Kasih!", { x: 1, y: 2.2, w: 8, h: 1.5, fontSize: 54, bold: true, color: "10B981", align: "center" });
+      slide8.addText("Selamat menggunakan aplikasi ITE = ITE", { x: 1, y: 3.5, w: 8, h: 1, fontSize: 24, color: "F1F5F9", align: "center" });
+      slide8.addText("Semoga mempermudah tugas Anda sebagai Pendidik.", { x: 1, y: 4.2, w: 8, h: 1, fontSize: 18, color: "94A3B8", align: "center" });
+
+      // Save PPTX
+      pptx.writeFile({ fileName: "Panduan_Penggunaan_ITE_Generator_SMANCA.pptx" });
+    }
+
+    // Auto trigger after 1 second
+    window.onload = function () {
+      setTimeout(generatePPT, 1000);
+    }
+  </script>
+</body>
+
+</html>
