@@ -357,6 +357,87 @@ const App = (() => {
     return `${template?.title || type} - ${subject}${topic ? ` - ${topic}` : ''} ${kelas}`.trim();
   }
 
+  /* ── Generate to Chat ───────────────────────────────── */
+
+  function collectFormData() {
+    if (!currentType) return null;
+    const template = Templates.getTemplate(currentType);
+    if (!template) return null;
+
+    const formData = {};
+    let hasError = false;
+
+    template.fields.forEach(field => {
+      const el = document.getElementById(`field_${field.id}`);
+      const value = el ? el.value.trim() : '';
+      formData[field.id] = value;
+
+      if (field.required && !value) {
+        el?.classList.add('error');
+        hasError = true;
+      } else {
+        el?.classList.remove('error');
+      }
+    });
+
+    if (hasError) {
+      showToast('Mohon isi semua field yang wajib (*)', 'warning');
+      return null;
+    }
+
+    return formData;
+  }
+
+  function handleGenerateToChat() {
+    const formData = collectFormData();
+    if (!formData) return;
+
+    const userPrompt = Templates.buildUserPrompt(currentType, formData);
+    if (!userPrompt) {
+      showToast('Tipe dokumen tidak dikenali.', 'error');
+      return;
+    }
+
+    // Navigate to chat page
+    window.location.hash = 'chat';
+
+    // Wait for page to render, then send the prompt
+    setTimeout(() => {
+      if (typeof Chat !== 'undefined') {
+        Chat.init();
+        Chat.receivePrompt(userPrompt);
+      }
+    }, 400);
+  }
+
+  async function handleGenerateToChatGPT() {
+    const formData = collectFormData();
+    if (!formData) return;
+
+    const userPrompt = Templates.buildUserPrompt(currentType, formData);
+    if (!userPrompt) {
+      showToast('Tipe dokumen tidak dikenali.', 'error');
+      return;
+    }
+
+    // Copy prompt to clipboard
+    try {
+      await navigator.clipboard.writeText(userPrompt);
+      showToast('Prompt sudah disalin! Paste di ChatGPT.', 'success');
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = userPrompt;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('Prompt sudah disalin! Paste di ChatGPT.', 'success');
+    }
+
+    // Open ChatGPT
+    window.open('https://chatgpt.com/', '_blank', 'noopener,noreferrer');
+  }
+
   /* ── Result Panel ────────────────────────────────── */
 
   function showResultPlaceholder() {
@@ -935,6 +1016,8 @@ const App = (() => {
   return {
     init,
     handleGenerate,
+    handleGenerateToChat,
+    handleGenerateToChatGPT,
     handleDownload,
     handleCopy,
     viewHistoryItem,

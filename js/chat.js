@@ -326,6 +326,17 @@ Aturan:
     App.showToast('ChatGPT dibuka di tab baru!', 'success');
   }
 
+  function receivePrompt(text) {
+    const input = document.getElementById('chatInput');
+    if (input) {
+      input.value = text;
+    }
+    // Small delay to ensure chat page is fully rendered
+    setTimeout(() => {
+      sendMessage();
+    }, 300);
+  }
+
   /* ── Markdown to HTML (simplified for chat) ───────── */
 
   function markdownToHtml(md) {
@@ -404,6 +415,7 @@ Aturan:
     copyMessage,
     quickSend,
     clearChat,
-    openChatGPT
+    openChatGPT,
+    receivePrompt
   };
 })();
